@@ -48,11 +48,11 @@ public class ImageHelper {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        String src = "D:\\20180111214256.png";
-        String dest=  "D:\\18.png";
-        long start=System.currentTimeMillis();
-        new ImageHelper().cutImage(src,dest,100,100,100,100);
-        System.out.println(System.currentTimeMillis()-start);
-    }
+//    public static void main(String[] args) throws IOException {
+//        String src = "Photo\\test3.png";
+//        String dest=  src;
+//        long start=System.currentTimeMillis();
+//        new ImageHelper().cutImage(src,dest,100,300,900,900);
+//        System.out.println("裁剪图片耗时:" + (System.currentTimeMillis()-start) + "ms");
+//    }
 }

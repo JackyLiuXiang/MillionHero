@@ -8,14 +8,15 @@ import java.io.File;
 import java.util.HashMap;
 
 /**
+ * 返回图片上识别的问题和选项
  * Created by 618 on 2018/1/12.
  * @author lingfengsan
  */
 public class BaiDuOCR implements OCR{
     //设置APPID/AK/SK
-    private static final String APP_ID = "10676706";
-    private static final String API_KEY = "LUCojrtX9sGTh4pHn1nIa9zT";
-    private static final String SECRET_KEY = "39IcxEGfLABxNG68jQ0AKamPM2t0rhHW";
+    private static final String APP_ID = "10686957";
+    private static final String API_KEY = "lbysq1pHG7tHNXsGbzBl6XVU";
+    private static final String SECRET_KEY = "YgfVD1mikkYoGn9MaPz9KjvV6ppLQcFA";
     private static final AipOcr CLIENT=new AipOcr(APP_ID, API_KEY, SECRET_KEY);
     BaiDuOCR(){
         // 可选：设置网络连接参数
@@ -30,14 +31,14 @@ public class BaiDuOCR implements OCR{
         // 调用接口
         JSONObject res = CLIENT.basicGeneral(path, new HashMap<String, String>());
         String result=res.toString(2);
-        System.out.println((System.currentTimeMillis())-start);
+        System.out.println("百度文字识别耗时:" + ((System.currentTimeMillis())-start) + "ms");
         return result;
     }
 
-    public static void main(String[] args) {
-        OCR ocr=new BaiDuOCR();
-        String path = "D:\\Photo\\20180111214256.png";
-        String result=ocr.getOCR(new File(path));
-        System.out.println(result);
-    }
+//    public static void main(String[] args) {
+//        OCR ocr=new BaiDuOCR();
+//        String path = "Photo\\test2.png";
+//        String result=ocr.getOCR(new File(path));
+//        System.out.println("图片识别结果:\n" + result);
+//    }
 }

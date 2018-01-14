@@ -1,12 +1,12 @@
 package ocr.impl;
 
+import java.io.File;
+
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import net.sourceforge.tess4j.util.LoadLibs;
 import ocr.OCR;
-
-import java.io.File;
 
 /**
  * Created by 618 on 2018/1/8.

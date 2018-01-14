@@ -21,6 +21,12 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        
+        <dependency>
             <groupId>com.baidu.aip</groupId>
             <artifactId>java-sdk</artifactId>
             <version>4.0.0</version>
@@ -41,11 +47,14 @@
             <artifactId>selenium-java</artifactId>
             <version>3.7.1</version>
         </dependency>
-        <dependency>
-            <groupId>net.sourceforge.tess4j</groupId>
-            <artifactId>tess4j</artifactId>
-            <version>3.2.1</version>
-        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib 
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		</dependency>
+		-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

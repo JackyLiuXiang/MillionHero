@@ -9,8 +9,15 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * Created by lingfengsan on 2018/1/12.
@@ -63,22 +70,67 @@ public class Utils {
             e.printStackTrace();
         }
     }
+    
+    /***
+     * 对识别后图片文字json数据进行解析
+     * @param json
+     * @return
+     */
+    public static String informationParse(String str) {
+    	StringBuilder questionStr = new StringBuilder();
+        try {
+            JSONObject jsonObject = new JSONObject(str);
+            
+            {
+                JSONArray jsonArray = jsonObject.getJSONArray("words_result");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                	Information person = new Information(str, null);
+                    JSONObject wordslist = jsonArray.getJSONObject(i);
+                    String words = wordslist.getString("words");
+                    questionStr.append(words);
+                }
+                
+//                return questionStr.toString().substring(1,questionStr.indexOf("?"));
+                return questionStr.toString();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("JsonParseActivity:json解析出现了问题");
+        }
+
+        return null;
+    }
+
+    
+    /**
+     * 获得题目的问题答案信息
+     * @param str
+     * @return
+     */
     public Information getInformation(String str) {
         //先去除空行
         str = str.replaceAll("((\r\n)|\n)[\\s\t ]*(\\1)+", "$1").
                 replaceAll("^((\r\n)|\n)", "");
-        str=str.replace('.',' ').replace(" ","");
+        str=str.replace('.',' ').replace(" ","").replace("？","?");
         //问号统一替换为英文问号防止报错
         str=str.replace("？","?");
-        int begin=(str.charAt(1)>='0'&& str.charAt(1)<=9)?2:1;
-        String question = str.trim().substring(begin, str.indexOf('?') + 1);
-        question = question.replaceAll("((\r\n)|\n)", "");
-        System.out.println(question);
+        String question = informationParse(str);
+        
         String remain = str.substring(str.indexOf("?") + 1);
         String[] ans = remain.trim().split("\n");
         return new Information(question,ans);
     }
+    /**
+     * 从手机截图发到电脑
+     * @return
+     */
     public String getImage() {
+        //       记录开始时间
+        long startTime;
+        //       记录结束时间
+        long endTime;
+        startTime = System.currentTimeMillis();
+        
         //获取当前时间作为名字
         Date current = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -93,8 +145,13 @@ public class Utils {
                 //将截图放在电脑本地
                 process = Runtime.getRuntime().exec(adbPath
                         + " pull /sdcard/screenshot.png " + curPhoto.getAbsolutePath());
-                process.waitFor();
+                int waitFor = process.waitFor();
             }
+            
+            endTime = System.currentTimeMillis();
+            float excTime = (float) (endTime - startTime);
+
+            System.out.println("执行时间：" + excTime + "ms");
             //返回当前图片名字
             return curPhoto.getAbsolutePath();
         } catch (IOException e) {
@@ -127,10 +184,22 @@ public class Utils {
         return rank;
     }
 
-    public static void main(String[] args) {
-        String adb = "D:\\software\\Android\\android-sdk\\platform-tools\\adb";
-        String imagePath = "D:\\Photo";
+    public static void main(String[] args) throws IOException {
+        String adb = "E:\\DevInstall\\platform-tools\\adb";
+        File file = new File("Photo");
+        if(!file.exists()) {
+        	file.mkdirs();
+        }
+        String imagePath = "Photo";
         Utils utils = new Utils(adb, imagePath);
-        utils.getImage();
+//      utils.getImage();
+        
+        File jsonfile = new File("information_test2.json");
+        String content = FileUtils.readFileToString(jsonfile);
+    	System.out.println("content:\n"+content);
+
+//    	utils.getInformation(content);
+    	
+    	utils.informationParse(content);
     }
 }

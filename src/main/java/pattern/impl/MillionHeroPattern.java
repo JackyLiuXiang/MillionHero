@@ -46,16 +46,18 @@ public class MillionHeroPattern implements Pattern {
         startTime = System.currentTimeMillis();
         //获取图片
         String imagePath = utils.getImage();
-        System.out.println("图片获取成功");
+//        String imagePath = "Photo\\test6.png";
+        System.out.println("MillionHeroPattern图片获取成功");
         //裁剪图片
          imageHelper.cutImage(imagePath,imagePath,START_X,START_Y,WIDTH,HEIGHT);
         //图像识别
         Long beginOfDetect = System.currentTimeMillis();
         String questionAndAnswers = ocr.getOCR(new File(imagePath));
-        System.out.println("识别成功");
-        System.out.println("识别时间：" + (System.currentTimeMillis() - beginOfDetect));
+        System.out.println("MillionHeroPattern识别成功" +  questionAndAnswers);
+        System.out.println("MillionHeroPattern识别时间：" + (System.currentTimeMillis() - beginOfDetect));
+        
         if (questionAndAnswers == null || !questionAndAnswers.contains(QUESTION_FLAG)) {
-            System.out.println("问题识别失败，输入回车继续运行");
+            System.out.println("MillionHeroPattern问题识别失败，输入回车继续运行");
             return;
         }
         //获取问题和答案
@@ -70,11 +72,15 @@ public class MillionHeroPattern implements Pattern {
             System.err.println("检测不到答案，输入回车继续运行");
             return;
         }
+        System.out.println("------------------------------------");
         System.out.println("问题:" + question);
+        System.out.println("------------------------------------");
+        System.out.println("************************************");
         System.out.println("答案：");
         for (String answer : answers) {
             System.out.println(answer);
         }
+        System.out.println("************************************");
         //搜索
         long countQuestion = 1;
         int numOfAnswer = answers.length > 3 ? 4 : answers.length;

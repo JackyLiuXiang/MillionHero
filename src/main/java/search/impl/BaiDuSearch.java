@@ -57,6 +57,16 @@ public class BaiDuSearch implements Search {
         }
         return search();
     }
-
+    
+//    public static void main(String[] args) {
+//    	BaiDuSearch baiDuSearch;
+//		try {
+//			baiDuSearch = new BaiDuSearch("1+23",true);
+//	    	Long call = baiDuSearch.call();
+//	    	System.out.println("call:" + call);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 }
